@@ -1,49 +1,25 @@
 FROM mcr.microsoft.com/devcontainers/base:debian
 
-# Install required packages
+# Install Docker CLI, Docker Compose plugin, and other required packages
 RUN apt-get update && apt-get install -y \
+    ca-certificates \
+    curl \
+    gnupg \
     libprotobuf-dev \
     pipx \
     build-essential \
     git \
-    ca-certificates \
     python3 \
     git-lfs \
     pre-commit \
     clang \
     mold \
     # Puppeteer / headless Chromium dependencies
-    libasound2 \
-    libatk1.0-0 \
-    libatk-bridge2.0-0 \
-    libc6 \
-    libcairo2 \
-    libcups2 \
-    libdbus-1-3 \
-    libexpat1 \
-    libfontconfig1 \
-    libgbm1 \
-    libgcc1 \
-    libgconf-2-4 \
-    libgdk-pixbuf2.0-0 \
-    libglib2.0-0 \
-    libgtk-3-0 \
-    libnspr4 \
-    libnss3 \
-    libpango-1.0-0 \
-    libx11-6 \
-    libx11-xcb1 \
-    libxcb1 \
-    libxcomposite1 \
-    libxcursor1 \
-    libxdamage1 \
-    libxext6 \
-    libxfixes3 \
-    libxi6 \
-    libxrandr2 \
-    libxrender1 \
-    libxss1 \
-    libxtst6 \
+    libasound2 libatk1.0-0 libatk-bridge2.0-0 libc6 libcairo2 libcups2 libdbus-1-3 \
+    libexpat1 libfontconfig1 libgbm1 libgcc1 libgconf-2-4 libgdk-pixbuf2.0-0 \
+    libglib2.0-0 libgtk-3-0 libnspr4 libnss3 libpango-1.0-0 libx11-6 libx11-xcb1 \
+    libxcb1 libxcomposite1 libxcursor1 libxdamage1 libxext6 libxfixes3 libxi6 \
+    libxrandr2 librender1 libxss1 libxtst6 \
     # helpers (useful for many headless/browser tasks)
     fonts-liberation \
     xdg-utils \
@@ -51,7 +27,20 @@ RUN apt-get update && apt-get install -y \
     # Chinese fonts
     fonts-noto-cjk \
     fonts-wqy-zenhei \
-    && rm -rf /var/lib/apt/lists/*
+    && \
+    # ---- Docker CLI & Compose 安装步骤 ----
+    install -m 0755 -d /etc/apt/keyrings && \
+    curl -fsSL https://download.docker.com/linux/debian/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg && \
+    chmod a+r /etc/apt/keyrings/docker.gpg && \
+    echo \
+      "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/debian \
+      $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+      tee /etc/apt/sources.list.d/docker.list > /dev/null && \
+    apt-get update && \
+    # 安装 Docker 客户端 和 Docker Compose 插件
+    apt-get install -y docker-ce-cli docker-compose-plugin && \
+    # ---- 清理 ----
+    rm -rf /var/lib/apt/lists/*
 
 # Switch to user vscode
 USER vscode
