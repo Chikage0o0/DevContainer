@@ -54,3 +54,6 @@ RUN . $HOME/.cargo/env && \
     cargo binstall cargo-deny cargo-nextest cargo-watch tokei rust-script mdbook just --no-confirm && \
     cargo install sea-orm-cli --no-default-features --features cli,codegen,runtime-async-std-rustls,async-std,sqlx-postgres && \
     rm -rf $HOME/.cargo/registry $HOME/.cargo/git
+
+# Install Bun
+RUN curl -fsSL https://bun.sh/install | bash
