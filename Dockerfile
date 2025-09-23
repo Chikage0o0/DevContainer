@@ -28,12 +28,14 @@ USER vscode
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | bash -s -- -y && \
     . "$HOME/.cargo/env" && \
     curl -L https://raw.githubusercontent.com/cargo-bins/cargo-binstall/main/install-from-binstall-release.sh | bash && \
-    cargo binstall --no-confirm cargo-deny cargo-nextest cargo-watch tokei rust-script mdbook just && \
-    cargo install sea-orm-cli --no-default-features --features cli,codegen,runtime-async-std-rustls,async-std,sqlx-postgres && \
+    cargo binstall --no-confirm cargo-deny cargo-nextest cargo-watch tokei rust-script mdbook sqlx-cli sea-orm-cli just && \
     rm -rf "$HOME/.cargo/registry" "$HOME/.cargo/git"
 
 # 安装 Bun
 RUN curl -fsSL https://bun.sh/install | bash
+
+# 安装 task
+RUN bun install -g @go-task/cli
 
 # 设置 node别名
 RUN mkdir -p ~/.local/bin/ && \
