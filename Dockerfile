@@ -36,7 +36,7 @@ RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | bash -s -- -y &&
 RUN curl -fsSL https://bun.sh/install | bash
 
 # 设置 node别名
-RUN mkdir -p ~/.local/bin/
+RUN mkdir -p ~/.local/bin/ && \
     ln -sf "$(which bun)" ~/.local/bin/node && \
     ln -sf "$(which bun)" ~/.local/bin/npm && \
     ln -sf "$(which bunx)" ~/.local/bin/npx
