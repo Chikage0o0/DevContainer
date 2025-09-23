@@ -36,4 +36,6 @@ RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | bash -s -- -y &&
 RUN curl -fsSL https://bun.sh/install | bash
 
 # 设置 node别名
-RUN ln -s $(which bun) /usr/local/bin/node && ln -s $(which bun) /usr/local/bin/npm && ln -s $(which bunx) /usr/local/bin/npx
+RUN RUN ln -sf "$(command -v bun)" ~/.local/bin/node && \
+    ln -sf "$(command -v bun)" ~/.local/bin/npm && \
+    ln -sf "$(command -v bunx)" ~/.local/bin/npx
