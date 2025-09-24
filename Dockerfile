@@ -27,6 +27,7 @@ USER vscode
 # 安装 Rust、cargo 工具链及常用 cargo 扩展
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | bash -s -- -y && \
     . "$HOME/.cargo/env" && \
+    rustup component add rust-analyzer && \
     curl -L https://raw.githubusercontent.com/cargo-bins/cargo-binstall/main/install-from-binstall-release.sh | bash && \
     cargo binstall --no-confirm cargo-deny cargo-nextest cargo-watch tokei rust-script mdbook sqlx-cli sea-orm-cli just && \
     rm -rf "$HOME/.cargo/registry" "$HOME/.cargo/git"
