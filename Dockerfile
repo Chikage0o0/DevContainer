@@ -39,7 +39,7 @@ RUN curl -LsSf https://astral.sh/uv/install.sh | sh
 RUN curl -fsSL https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash && \
     /bin/bash -c "source $HOME/.nvm/nvm.sh && nvm install --lts && npm install -g @go-task/cli && npm install -g pnpm" 
 
-# 安装 Go 语言环境到用户目录（修改部分）
+# 安装 Go 语言环境到用户目录
 RUN GO_VERSION=$(curl -s "https://go.dev/VERSION?m=text" | head -n 1) && \
     ARCH=$(dpkg --print-architecture) && \
     TEMP_GO_TAR="${GO_VERSION}.linux-${ARCH}.tar.gz" && \
@@ -47,6 +47,7 @@ RUN GO_VERSION=$(curl -s "https://go.dev/VERSION?m=text" | head -n 1) && \
     tar -C "$HOME" -xzf "/tmp/${TEMP_GO_TAR}" && \
     rm "/tmp/${TEMP_GO_TAR}"
 
-# 设置 Go 环境变量（修改部分）
+# 设置 Go 环境变量
 ENV GOROOT="/home/vscode/go"
-ENV PATH="/home/vscode/go/bin:${PATH}"
+ENV GOPATH="/home/vscode/go_workspace"
+ENV PATH="${GOROOT}/bin:${PATH}"
