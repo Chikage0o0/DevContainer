@@ -50,4 +50,4 @@ RUN GO_VERSION=$(curl -s "https://go.dev/VERSION?m=text" | head -n 1) && \
 # 设置 Go 环境变量
 ENV GOROOT="/home/vscode/go"
 ENV GOPATH="/home/vscode/go_workspace"
-ENV PATH="${GOROOT}/bin:${PATH}"
+ENV PATH="${GOROOT}/bin:${GOPATH}/bin:${PATH}"
