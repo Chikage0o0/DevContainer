@@ -52,4 +52,4 @@ ENV GOROOT="/home/vscode/go"
 ENV GOPATH="/home/vscode/go_workspace"
 ENV PATH="${GOROOT}/bin:${GOPATH}/bin:${PATH}"
 
-COPY .claude /home/vscode/.claude
+COPY --chown=vscode:vscode .claude /home/vscode/.claude
