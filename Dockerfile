@@ -31,13 +31,13 @@ RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | bash -s -- -y &&
     curl -L https://raw.githubusercontent.com/cargo-bins/cargo-binstall/main/install-from-binstall-release.sh | bash && \
     cargo binstall --no-confirm cargo-deny cargo-nextest cargo-watch tokei rust-script mdbook sqlx-cli sea-orm-cli just && \
     rm -rf "$HOME/.cargo/registry" "$HOME/.cargo/git"
-    
+
 # 安装 uv (Python 包管理器)
 RUN curl -LsSf https://astral.sh/uv/install.sh | sh
 
 # 安装 Node.js
 RUN curl -fsSL https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash && \
-    /bin/bash -c "source $HOME/.nvm/nvm.sh && nvm install --lts && npm install -g @go-task/cli && npm install -g pnpm" 
+    /bin/bash -c "source $HOME/.nvm/nvm.sh && nvm install --lts && npm install -g @go-task/cli && npm install -g pnpm"
 
 # 安装 Go 语言环境到用户目录
 RUN GO_VERSION=$(curl -s "https://go.dev/VERSION?m=text" | head -n 1) && \
@@ -53,3 +53,4 @@ ENV GOPATH="/home/vscode/go_workspace"
 ENV PATH="${GOROOT}/bin:${GOPATH}/bin:${PATH}"
 
 COPY --chown=vscode:vscode .claude /home/vscode/.claude
+RUN git config --global --add safe.directory /workspaces/content
